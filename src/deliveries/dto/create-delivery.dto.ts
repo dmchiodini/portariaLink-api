@@ -1,5 +1,4 @@
 import { IsOptional, IsString, IsUUID, IsEnum } from 'class-validator';
-import { DeliveryStatus } from '@prisma/client';
 import { DeliveryStatusEnum } from 'src/common/enums/delivery-status.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -16,5 +15,6 @@ export class CreateDeliveryDto {
   @ApiProperty({ description: 'Status da encomenda' })
   @IsOptional()
   @IsEnum(DeliveryStatusEnum)
-  status?: DeliveryStatus;
+  status?: DeliveryStatusEnum
+    ;
 }

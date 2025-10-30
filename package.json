@@ -6,10 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18"
   },
   "scripts": {
-    "build": "prisma generate && npx nest build",
+    "build": "prisma generate && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main.js",
     "dev": "nest start --watch",
