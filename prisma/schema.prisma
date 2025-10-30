@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Condominium {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  address   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+
+  users       User[]
+  residents   Resident[]
+  deliveries  Delivery[]
+}
+
+model Resident {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  phone      String    // número com DDI/DDM ou formato local (ex: +55...)
+  apartment  String
+  condominiumId String      @db.Uuid
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+
+  deliveries  Delivery[]
+  condominium Condominium @relation(fields: [condominiumId], references: [id])
+}
+
+model Delivery {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  residentId   String    @db.Uuid
+  condominiumId String   @db.Uuid
+  description  String?   
+  status       DeliveryStatus @default(PARA_RETIRADA)
+  createdAt DateTime  @default(now())
+  updatedAt    DateTime  @default(now())
+
+  resident     Resident  @relation(fields: [residentId], references: [id])
+  condominium   Condominium   @relation(fields: [condominiumId], references: [id])
+}
+
+model User {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  email      String   @unique
+  password   String
+  role       UserRole @default(PORTER)
+  condominiumId String      @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  condominium Condominium @relation(fields: [condominiumId], references: [id])
+}
+
+enum DeliveryStatus {
+  PARA_RETIRADA
+  ENTREGUE
+  DESCARTADA
+}
+
+enum UserRole {
+  PORTER
+  ADMIN
+}

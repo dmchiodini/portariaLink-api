@@ -1,0 +1,5 @@
+export enum DeliveryStatusEnum {
+  PARA_RETIRADA = "PARA_RETIRADA",
+  ENTREGUE = "ENTREGUE",
+  DESCARTADA = "DESCARTADA"
+}

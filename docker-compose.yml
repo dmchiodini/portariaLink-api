@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15
+    restart: always
+    container_name: portariaLink_postgres
+    environment:
+      POSTGRES_USER: dmchiodini89
+      POSTGRES_PASSWORD: dmchiodini090489
+      POSTGRES_DB: portariaLink_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
